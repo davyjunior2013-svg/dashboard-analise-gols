@@ -111,7 +111,7 @@ function renderMatrix(d){const zKey="TERÇO DA ASSISTÊNCIA",aKey="TIPO DE PASSE
 function renderTable(d){const cols=Object.keys(DATA[0]||{});document.getElementById("rowCount").textContent=d.length+" registros";document.getElementById("thead").innerHTML="<tr>"+cols.map(c=>"<th>"+c+"</th>").join("")+"</tr>";document.getElementById("tbody").innerHTML=d.map(r=>"<tr>"+cols.map(c=>"<td>"+(r[c]??"")+"</td>").join("")+"</tr>").join("")}
 async function loadData(){
   try{
-    const response=await fetch("./gols.csv",{cache:"no-store"});
+    const response=await fetch("https://raw.githubusercontent.com/davyjunior2013-svg/dashboard-analise-gols/main/gols.csv?ts="+Date.now(),{cache:"no-store"});
     if(!response.ok) throw new Error("Não foi possível carregar gols.csv (HTTP "+response.status+")");
     const csv=await response.text();
     DATA=parseCSV(csv);
