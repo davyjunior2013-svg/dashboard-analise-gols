@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Análise de Gols | Scout</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-mark">SC</span><div><b>SCOUT</b><small>Análise de Gols</small></div></div>
+    <nav id="nav">
+      <button class="nav-item active" data-page="gols">⚽ Análise de Gols</button>
+      <button class="nav-item" data-page="assistencias">🅰️ Assistências</button>
+      <button class="nav-item" data-page="dados">▦ Base de Dados</button>
+    </nav>
+    <div class="side-note">Aplicação web independente do Power BI<br>Dados carregados da sua base Excel.</div>
+  </aside>
+
+  <main>
+    <header class="topbar">
+      <div><div class="eyebrow">DASHBOARD DE PERFORMANCE</div><h1 id="pageTitle">Análise de Gols</h1></div>
+      <button id="reset" class="ghost">Limpar filtros</button>
+    </header>
+
+    <section class="filters">
+      <label>Equipe<select id="fEquipe"><option value="">Todas</option></select></label>
+      <label>Competição<select id="fComp"><option value="">Todas</option></select></label>
+      <label>Adversário<select id="fAdv"><option value="">Todos</option></select></label>
+      <label>Mando<select id="fMando"><option value="">Todos</option></select></label>
+      <label>Autor<select id="fAutor"><option value="">Todos</option></select></label>
+      <label>Origem<select id="fOrigem"><option value="">Todas</option></select></label>
+    </section>
+
+    <div id="golsPage" class="page">
+      <section class="cards">
+        <div class="card"><span>GOLS</span><strong id="kpiGoals">0</strong></div>
+        <div class="card"><span>JOGOS</span><strong id="kpiGames">0</strong></div>
+        <div class="card"><span>MÉDIA / JOGO</span><strong id="kpiAvg">0,00</strong></div>
+        <div class="card"><span>CASA</span><strong id="kpiHome">0</strong></div>
+        <div class="card"><span>FORA</span><strong id="kpiAway">0</strong></div>
+      </section>
+      <section class="grid">
+        <div class="panel wide"><div class="panel-head"><h2>Gols por minuto</h2><span>0–15 / 16–30 / 31–45 / 46–60 / 61–75 / 76–90+</span></div><canvas id="minuteChart"></canvas></div>
+        <div class="panel"><div class="panel-head"><h2>Gols por jogador</h2></div><canvas id="scorerChart"></canvas></div>
+        <div class="panel"><div class="panel-head"><h2>Origem da jogada</h2></div><canvas id="originChart"></canvas></div>
+        <div class="panel"><div class="panel-head"><h2>Zona da finalização</h2></div><canvas id="zoneChart"></canvas></div>
+        <div class="panel"><div class="panel-head"><h2>Forma da finalização</h2></div><canvas id="finishChart"></canvas></div>
+        <div class="panel wide"><div class="panel-head"><h2>Gols por competição</h2></div><canvas id="compChart"></canvas></div>
+      </section>
+    </section>
+
+    <section id="assistenciasPage" class="page hidden">
+      <section class="cards">
+        <div class="card"><span>GOLS COM ASSISTÊNCIA</span><strong id="kpiAssisted">0</strong></div>
+        <div class="card"><span>SEM ASSISTÊNCIA</span><strong id="kpiUnassisted">0</strong></div>
+        <div class="card"><span>ASSISTENTES</span><strong id="kpiAssistants">0</strong></div>
+        <div class="card"><span>ÚLTIMO TERÇO</span><strong id="kpiThird">0</strong></div>
+      </section>
+      <section class="grid">
+        <div class="panel"><div class="panel-head"><h2>Assistentes</h2></div><canvas id="assistantChart"></canvas></div>
+        <div class="panel"><div class="panel-head"><h2>Tipo de passe / ação</h2></div><canvas id="passChart"></canvas></div>
+        <div class="panel"><div class="panel-head"><h2>Zona da assistência</h2></div><canvas id="assistZoneChart"></canvas></div>
+        <div class="panel"><div class="panel-head"><h2>Terço da assistência</h2></div><canvas id="thirdChart"></canvas></div>
+      </section>
+    </section>
+
+    <section id="dadosPage" class="page hidden">
+      <div class="panel table-panel">
+        <div class="panel-head"><h2>Registros filtrados</h2><span id="rowCount">0 registros</span></div>
+        <div class="table-wrap"><table><thead id="thead"></thead><tbody id="tbody"></tbody></table></div>
+      </div>
+    </section>
+  </main>
+</div>
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
