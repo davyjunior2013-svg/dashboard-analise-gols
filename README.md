@@ -1,2 +1,2 @@
-# Dashboard de Análise de Gols — V4
-Versão estática para publicação na Vercel. Os dados da BASE_GOLS estão incorporados diretamente no index.html, evitando falhas de carregamento do data.js.
+# Dashboard de Análise de Gols — V5
+Correção da coluna MINUTO: valores Excel armazenados como duração [h]:mm:ss são convertidos para a hora/minuto correto do gol.
