@@ -124,11 +124,26 @@ function normalizeCsvData(rows){
       if(m){
         o[dateKey]=`${m[3]}-${String(m[2]).padStart(2,'0')}-${String(m[1]).padStart(2,'0')}`;
       }else{
+        // Excel/CSV pode exportar algumas datas como "13/jun" (sem o ano).
+        // Neste conjunto, essas datas pertencem às competições de 2026.
         m=v.match(/^(\d{1,2})\/([a-zçãé]+)\/(\d{4})/i);
-        if(m && months[m[2]]) o[dateKey]=`${m[3]}-${months[m[2]]}-${String(m[1]).padStart(2,'0')}`;
-        else{
-          m=v.match(/^(\d{4})-(\d{2})-(\d{2})/);
-          if(m) o[dateKey]=`${m[1]}-${m[2]}-${m[3]}`;
+        if(m && months[m[2]]) {
+          o[dateKey]=`${m[3]}-${months[m[2]]}-${String(m[1]).padStart(2,'0')}`;
+        } else {
+          m=v.match(/^(\d{1,2})\/([a-zçãé]+)$/i);
+          if(m && months[m[2]]) {
+            const comp=norm(o['COMPETIÇÃO']||'');
+            const team=norm(o['EQUIPE']||'');
+            const monthNum=Number(months[m[2]]);
+            let year='2026';
+            // Potiguar/QFC é 2026; no Módulo II, os registros sem ano
+            // presentes na base são de junho/julho de 2026.
+            if(comp.includes('POTIGUAR') || team.includes('QFC') || monthNum>=6) year='2026';
+            o[dateKey]=`${year}-${months[m[2]]}-${String(m[1]).padStart(2,'0')}`;
+          } else {
+            m=v.match(/^(\d{4})-(\d{2})-(\d{2})/);
+            if(m) o[dateKey]=`${m[1]}-${m[2]}-${m[3]}`;
+          }
         }
       }
     }
