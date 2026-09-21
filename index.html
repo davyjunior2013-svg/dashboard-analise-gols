@@ -136,6 +136,10 @@ async function loadData(){
 }
 function parseCSV(text){
   if(text.charCodeAt(0)===0xFEFF) text=text.slice(1);
+  // Excel em português (Brasil) normalmente exporta CSV usando ponto e vírgula.
+  // Detectamos automaticamente ; ou , para que o dashboard aceite os dois formatos.
+  const firstLine=(text.split(/\r?\n/,1)[0]||"");
+  const delimiter=(firstLine.split(";").length > firstLine.split(",").length) ? ";" : ",";
   const rows=[]; let row=[], field="", quoted=false;
   for(let i=0;i<text.length;i++){
     const c=text[i], n=text[i+1];
@@ -145,7 +149,7 @@ function parseCSV(text){
       else field+=c;
     }else{
       if(c==='"' && field==='') quoted=true;
-      else if(c===','){ row.push(field); field=""; }
+      else if(c===delimiter){ row.push(field); field=""; }
       else if(c==='\n'){ row.push(field); rows.push(row); row=[]; field=""; }
       else if(c!=='\r'){ field+=c; }
     }
